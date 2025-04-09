@@ -34,16 +34,16 @@ class _ContentViewState extends State<ContentView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("🎯🎯🎯🎯"),
-          Text("68"),
+          Text("🎯🎯🎯🎯", style: Theme.of(context).textTheme.headlineMedium),
+          Text("68", style: Theme.of(context).textTheme.headlineMedium?.copyWith(letterSpacing: -1, fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${_MIN_VALUE.toInt()}"),
+                Text("${_MIN_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                 Expanded(child: Slider(value: _value, onChanged: _onChanged, min:_MIN_VALUE,max: _MAX_VALUE)),
-                Text("${_MAX_VALUE.toInt()}"),
+                Text("${_MAX_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
