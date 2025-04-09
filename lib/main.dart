@@ -48,7 +48,15 @@ class _ContentViewState extends State<ContentView> {
             ),
           ),
           Text("$_value"),
-          ElevatedButton(onPressed: _onPressed, child: Text("TRY"))
+          ElevatedButton(
+            onPressed: _onPressed, 
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(48, 48),
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21))
+            ),
+            child: Text("TRY", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),),
+          )
         ],
       ),
     );
