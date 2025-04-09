@@ -78,5 +78,14 @@ class _ContentViewState extends State<ContentView> {
 
   void _onPressed() {
     print("Button Pressed");
+    showDialog(context: context, builder: (context)=>AlertDialog(
+      title: const Text("Hello"),
+      content: Text("This is my first alert"),
+      actions: [
+        ElevatedButton(onPressed: () {
+          Navigator.pop(context);
+        }, child: const Text("OK"))
+      ],
+    ));
   }
 }
