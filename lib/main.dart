@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_guess_the_number/app_colors.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,7 +10,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
       home: Scaffold(
         body: ContentView(),
       ),
@@ -42,7 +44,12 @@ class _ContentViewState extends State<ContentView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("${_MIN_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                Expanded(child: Slider(value: _value, onChanged: _onChanged, min:_MIN_VALUE,max: _MAX_VALUE)),
+                Expanded(child: Slider(
+                  value: _value, 
+                  onChanged: _onChanged, 
+                  min:_MIN_VALUE,
+                  max: _MAX_VALUE, 
+                  activeColor: AppColors.primaryColor,)),
                 Text("${_MAX_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
@@ -52,7 +59,7 @@ class _ContentViewState extends State<ContentView> {
             onPressed: _onPressed, 
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(48, 48),
-              backgroundColor: Colors.blue,
+              backgroundColor: AppColors.primaryColor,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21))
             ),
             child: Text("TRY", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),),
