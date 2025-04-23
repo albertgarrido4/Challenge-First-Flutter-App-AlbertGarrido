@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_the_number/app_colors.dart';
+import 'package:flutter_guess_the_number/slider_widget.dart';
 
 void main() {
   runApp(const MainApp());
@@ -40,19 +41,7 @@ class _ContentViewState extends State<ContentView> {
           Text("68", style: Theme.of(context).textTheme.headlineMedium?.copyWith(letterSpacing: -1, fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("${_MIN_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                Expanded(child: Slider(
-                  value: _value, 
-                  onChanged: _onChanged, 
-                  min:_MIN_VALUE,
-                  max: _MAX_VALUE, 
-                  activeColor: AppColors.primaryColor,)),
-                Text("${_MAX_VALUE.toInt()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-              ],
-            ),
+            child: SliderWidget(value: _value, onChanged: _onChanged, min: _MIN_VALUE, max: _MAX_VALUE),
           ),
           Text("$_value"),
           ElevatedButton(
