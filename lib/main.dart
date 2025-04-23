@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_the_number/app_colors.dart';
+import 'package:flutter_guess_the_number/background_view.dart';
 import 'package:flutter_guess_the_number/game.dart';
 import 'package:flutter_guess_the_number/slider_widget.dart';
+import 'package:flutter_guess_the_number/test_view.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,7 +17,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
       home: Scaffold(
-        body: ContentView(),
+        body: Stack(children: [
+          const BackgroundView(),
+          const ContentView(),
+        ]),
       ),
     );
   }
