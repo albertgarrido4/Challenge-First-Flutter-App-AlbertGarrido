@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_guess_the_number/marks_view.dart';
 import 'package:flutter_guess_the_number/number_view.dart';
 import 'package:flutter_guess_the_number/rounded_view.dart';
 import 'package:flutter_guess_the_number/view_model.dart';
@@ -17,7 +18,9 @@ class BackgroundView extends StatelessWidget {
             children: [
               TextButton(onPressed:(){appState.restartGame();}, child: RoundedView(icon: Icons.refresh)),
               Spacer(),
-              RoundedView(icon: Icons.list)
+              TextButton(onPressed:(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MarksView()));
+              }, child: RoundedView(icon: Icons.list)),
             ],
           ),
           Spacer(),
