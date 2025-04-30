@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_the_number/number_view.dart';
 import 'package:flutter_guess_the_number/rounded_view.dart';
+import 'package:flutter_guess_the_number/view_model.dart';
+import 'package:provider/provider.dart';
 class BackgroundView extends StatelessWidget {
   const BackgroundView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<ViewModel>(); 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Row(
             children: [
-              RoundedView(icon: Icons.refresh),
+              TextButton(onPressed:(){appState.restartGame();}, child: RoundedView(icon: Icons.refresh)),
               Spacer(),
               RoundedView(icon: Icons.list)
             ],
@@ -20,9 +23,9 @@ class BackgroundView extends StatelessWidget {
           Spacer(),
           Row(
             children: [
-              NumberView(text: "SCORE", value: 0),
+              NumberView(text: "SCORE", value: appState.score),
               Spacer(),
-              NumberView(text: "ROUND", value: 0),
+              NumberView(text: "ROUND", value: appState.rounds),
             ],
           ),
         ],

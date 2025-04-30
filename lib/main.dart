@@ -4,6 +4,8 @@ import 'package:flutter_guess_the_number/background_view.dart';
 import 'package:flutter_guess_the_number/game.dart';
 import 'package:flutter_guess_the_number/slider_widget.dart';
 import 'package:flutter_guess_the_number/test_view.dart';
+import 'package:flutter_guess_the_number/view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,13 +16,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
-      home: Scaffold(
-        body: Stack(children: [
-          const BackgroundView(),
-          const ContentView(),
-        ]),
+    return ChangeNotifierProvider(
+      create: (context) => ViewModel(),
+      child: MaterialApp(
+        theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
+        home: Scaffold(
+          body: Stack(children: [const BackgroundView(), const ContentView()]),
+        ),
       ),
     );
   }
@@ -37,55 +39,79 @@ class _ContentViewState extends State<ContentView> {
   double _value = 50;
   final double _MIN_VALUE = 1.0;
   final double _MAX_VALUE = 100.0;
-  final Game _game = Game();
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<ViewModel>(); 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("🎯🎯🎯🎯", style: Theme.of(context).textTheme.headlineMedium),
-          Text("${_game.targetValue}", style: Theme.of(context).textTheme.headlineMedium?.copyWith(letterSpacing: -1, fontWeight: FontWeight.bold)),
+          Text(
+            "${appState.targetValue}",
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              letterSpacing: -1,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SliderWidget(value: _value, onChanged: _onChanged, min: _MIN_VALUE, max: _MAX_VALUE),
+            child: SliderWidget(
+              value: _value,
+              onChanged: _onChanged,
+              min: _MIN_VALUE,
+              max: _MAX_VALUE,
+            ),
           ),
-          Text("$_value"),
+          //Text("$_value"),
           ElevatedButton(
-            onPressed: _onPressed, 
+            onPressed: _onPressed,
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(48, 48),
               backgroundColor: AppColors.primaryColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21))
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(21),
+              ),
             ),
-            child: Text("TRY", style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),),
-          )
+            child: Text(
+              "TRY",
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: Colors.white),
+            ),
+          ),
         ],
       ),
     );
   }
-  
+
   void _onChanged(double value) {
     setState(() {
       _value = value;
     });
-    
   }
 
   void _onPressed() {
-    
-    _game.calculatePoints(_value);
-    showDialog(context: context, builder: (context)=>AlertDialog(
-      title: const Text("Congralutations"),
-      content: Text("Your points are: ${_game.points}"),
-      actions: [
-        ElevatedButton(onPressed: () {
-          setState(() {
-            _game.reset();
-          });
-          Navigator.pop(context);
-        }, child: const Text("OK"))
-      ],
-    ));
+    var appState = Provider.of<ViewModel>(context, listen: false);
+    appState.calculatePoints(_value);
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Congralutations"),
+            content: Text("Your points are: ${appState.points}"),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    appState.reset();
+                  });
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+    );
   }
 }
